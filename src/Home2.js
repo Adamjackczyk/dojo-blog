@@ -14,14 +14,20 @@ export default function Home2() {
       id: 3,
     },
   ]);
+
+  const handleDelete = (id) => {
+    const newBlogs = blogs.filter((blog) => blog.id !== id);
+    return setBlogs(newBlogs);
+  };
+
   return (
     <div className="home">
-      <BlogList blogs={blogs} title="All Blogs!" />
+      <BlogList blogs={blogs} title="All Blogs!" handleDelete={handleDelete} />
       <BlogList
         blogs={blogs.filter((blog) => blog.author === "mario")}
         title="Mario's blogs!"
+        handleDelete={handleDelete}
       />
-      S
     </div>
   );
 }

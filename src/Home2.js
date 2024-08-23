@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./index.css";
 import BlogList from "./BlogList";
 
@@ -20,14 +20,18 @@ export default function Home2() {
     return setBlogs(newBlogs);
   };
 
+  useEffect(() => {
+    console.log("useEffect");
+  }, [blogs]);
+
   return (
     <div className="home">
       <BlogList blogs={blogs} title="All Blogs!" handleDelete={handleDelete} />
-      <BlogList
+      {/* <BlogList
         blogs={blogs.filter((blog) => blog.author === "mario")}
         title="Mario's blogs!"
         handleDelete={handleDelete}
-      />
+      /> */}
     </div>
   );
 }

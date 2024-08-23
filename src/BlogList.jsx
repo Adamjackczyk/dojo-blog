@@ -1,7 +1,10 @@
+import React, { useState } from "react";
+
 const BlogList = (props) => {
   const blogs = props.blogs;
   const { title } = props;
 
+  const [name, setName] = useState("mario");
   return (
     <div className="blog-list">
       <h2>{title}</h2>

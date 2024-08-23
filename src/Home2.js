@@ -15,6 +15,8 @@ export default function Home2() {
     },
   ]);
 
+  const [name, setName] = useState("mario");
+
   const handleDelete = (id) => {
     const newBlogs = blogs.filter((blog) => blog.id !== id);
     return setBlogs(newBlogs);
@@ -22,7 +24,8 @@ export default function Home2() {
 
   useEffect(() => {
     console.log("useEffect");
-  }, [blogs]);
+    console.log(name);
+  }, [name]);
 
   return (
     <div className="home">
@@ -32,6 +35,8 @@ export default function Home2() {
         title="Mario's blogs!"
         handleDelete={handleDelete}
       /> */}
+      <button onClick={() => setName("luigi")}>change name</button>
+      <p>{name}</p>
     </div>
   );
 }

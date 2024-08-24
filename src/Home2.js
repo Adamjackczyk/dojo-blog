@@ -4,37 +4,41 @@ import "./index.css";
 import BlogList from "./BlogList";
 
 export default function Home2() {
-  const [blogs, setBlogs] = useState([
-    { title: "My new site", body: "lorem ipsum...", author: "mario", id: 1 },
-    { title: "Welcome party!", body: "lorem ipsum...", author: "yoshi", id: 2 },
-    {
-      title: "Web dev top tips",
-      body: "lorem ipsum...",
-      author: "mario",
-      id: 3,
-    },
-  ]);
-
+  const [blogs, setBlogs] = useState(null);
   const [name, setName] = useState(null);
+  const [error, setError] = useState(null);
+
+  const [isPending, setIsPending] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/blogs")
+      .then((res) => {
+        console.log(res);
+        if (!res.ok) {
+          throw Error("could not fetch the data for that resource");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setError(null);
+        setBlogs(data);
+        setIsPending(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setIsPending(false);
+      });
+  }, []);
 
   // const handleDelete = (id) => {
   //   const newBlogs = blogs.filter((blog) => blog.id !== id);
   //   return setBlogs(newBlogs);
   // };
 
-  useEffect(() => {
-    fetch("http://localhost:8000/blogs")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setBlogs(data);
-      });
-  }, []);
-
   return (
     <div className="home">
+      {error && <div>{error}</div>}
+      {isPending && <div>loading...</div>}
       {blogs && (
         <BlogList
           blogs={blogs}
@@ -47,7 +51,7 @@ export default function Home2() {
         title="Mario's blogs!"
         handleDelete={handleDelete}
       /> */}
-      <button onClick={() => setName("luigi")}>change name</button>
+      {/* <button onClick={() => setName("luigi")}>change name</button> */}
       <p>{name}</p>
     </div>
   );

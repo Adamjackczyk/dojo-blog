@@ -1,5 +1,4 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import "./index.css";
 import BlogList from "./BlogList";
 import useFetch from "./useFetch";
